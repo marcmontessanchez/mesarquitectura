@@ -7,6 +7,8 @@
     <title>Mes Arquitectura - Santi Montes</title>
     <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <meta name="description"
+        content="Santi Montes, arquitecto profesional con más de 25 años de experiencia, dirige Més Arquitectura desde su fundación en 2000. Nuestra empresa se especializa en proyectos residenciales, reformas integrales y gestión técnica de obras.">
 </head>
 
 <body>
@@ -331,28 +333,30 @@
 
                 <!-- Right Sid - Form -->
                 <div class="contact-right">
-                    <form onsubmit="handleSubmit(event)" class="contact-form">
+                    <form class="contact-form" action="https://formspree.io/f/xojjwzwe"
+                        method="POST">
+
                         <div class="form-group">
                             <label>Nombre Completo *</label>
-                            <input type="text" required placeholder="Tu nombre">
+                            <input name="Nombre" type="text" required placeholder="Tu nombre">
                             <div class="input-underline"></div>
                         </div>
 
                         <div class="form-group">
                             <label>Email *</label>
-                            <input type="email" required placeholder="tu@email.com">
+                            <input name="Email" type="email" required placeholder="tu@email.com">
                             <div class="input-underline"></div>
                         </div>
 
                         <div class="form-group">
                             <label>Teléfono</label>
-                            <input type="tel" placeholder="+34 600 000 000">
+                            <input name="Teléfono" type="tel" placeholder="+34 600 000 000">
                             <div class="input-underline"></div>
                         </div>
 
                         <div class="form-group">
                             <label>Tipo de Proyecto *</label>
-                            <select required>
+                            <select name="Tipo de Proyecto" required>
                                 <option value="">Selecciona un tipo...</option>
                                 <option value="unifamiliar">Vivienda Unifamiliar</option>
                                 <option value="reforma">Reforma Integral</option>
@@ -366,20 +370,20 @@
 
                         <div class="form-group">
                             <label>Presupuesto Estimado</label>
-                            <select>
+                            <select name="Presupuesto Estimado">
                                 <option value="">Selecciona rango...</option>
-                                <option value="50k">Hasta 50.000€</option>
-                                <option value="100k">50.000€ - 100.000€</option>
-                                <option value="500k">100.000€ - 500.000€</option>
-                                <option value="1m">500.000€ - 1.000.000€</option>
-                                <option value="mas">Más de 1.000.000€</option>
+                                <option value="Hasta 50.000€">Hasta 50.000€</option>
+                                <option value="50.000€ - 100.000€">50.000€ - 100.000€</option>
+                                <option value="100.000€ - 500.000€">100.000€ - 500.000€</option>
+                                <option value="500.000€ - 1.000.000€">500.000€ - 1.000.000€</option>
+                                <option value="Más de 1.000.000€">Más de 1.000.000€</option>
                             </select>
                             <div class="input-underline"></div>
                         </div>
 
                         <div class="form-group">
                             <label>Tu Proyecto *</label>
-                            <textarea required
+                            <textarea name="Cuéntanos sobre tu proyecto" required
                                 placeholder="Cuéntanos sobre tu proyecto, ideas, necesidades y cualquier detalle que consideres importante..."></textarea>
                             <div class="input-underline"></div>
                         </div>

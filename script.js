@@ -160,9 +160,3 @@ function showPage(pageId) {
     localStorage.setItem('currentPage', pageId);
     window.scrollTo(0, 0);
 }
-
-function handleSubmit(event) {
-    event.preventDefault();
-    alert('Mensaje enviado con éxito. Nos pondremos en contacto pronto.');
-    event.target.reset();
-}
