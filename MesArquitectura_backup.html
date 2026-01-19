@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Més Arquitectura - Santiago Montes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            line-height: 1.7;
+            color: #1a1a1a;
+            background: #ffffff;
+        }
+
+        /* Navigation */
+        nav {
+            background: #ffffff;
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #d32f2f;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #d32f2f;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        
+        .logo:hover {
+            color: #1a1a1a;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #1a1a1a;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            color: #d32f2f;
+        }
+
+        /* Landing Page */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%), 
+                        url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1200&h=600&fit=crop') center/cover;
+            background-attachment: fixed;
+            color: #1a1a1a;
+            padding: 120px 2rem 100px;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+        }
+
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #d32f2f;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 400;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 32px;
+            background: #d32f2f;
+            color: white;
+            text-decoration: none;
+            border-radius: 2px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+        }
+
+        .cta-button:hover {
+            background: #1a1a1a;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 2rem;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: #1a1a1a;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #d32f2f;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: #fafafa;
+            padding: 2.5rem;
+            border-radius: 0;
+            border: 1px solid #e5e5e5;
+            text-align: left;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: #d32f2f;
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+        }
+        
+        .service-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            color: #1a1a1a;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 80px 2rem;
+            background: #f5f5f5;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+            height: 320px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #1a1a1a;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid #d32f2f;
+        }
+        
+        .portfolio-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(211, 47, 47, 0.1) 0%, rgba(0, 0, 0, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+        
+        .portfolio-item:hover::after {
+            opacity: 1;
+        }
+
+        .portfolio-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.3rem;
+            font-weight: 600;
+            color: #d32f2f;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-item p {
+            font-size: 0.9rem;
+            color: #666;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 200;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 0;
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            animation: slideIn 0.3s ease-in;
+            margin: 20px auto;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.8rem;
+            font-weight: 300;
+            color: #999;
+            cursor: pointer;
+            background: none;
+            border: none;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            color: #d32f2f;
+        }
+
+        .modal-header {
+            background: #ffffff;
+            padding: 3rem 2rem;
+            border-bottom: 2px solid #d32f2f;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #d32f2f;
+            font-weight: 600;
+        }
+
+        .modal-header p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .modal-body {
+            padding: 3rem 2rem;
+            background: #ffffff;
+        }
+
+        .modal-body h3 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .modal-body ul {
+            margin-bottom: 2rem;
+            line-height: 1.9;
+        }
+
+        .modal-body li {
+            margin-bottom: 0.7rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .modal-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .gallery-item {
+            background: #fafafa;
+            border-radius: 0;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 1rem;
+            border: 2px solid #e5e5e5;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item:hover {
+            border-color: #d32f2f;
+            background: #f5f5f5;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #1a1a1a;
+            color: white;
+            padding: 80px 2rem;
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 2rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #d32f2f;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            color: #f5f5f5;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: #ffffff;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: none;
+            border-bottom: 2px solid #d32f2f;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #e0e0e0;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-bottom-color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        footer {
+            background: #ffffff;
+            color: #1a1a1a;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.9rem;
+            border-top: 2px solid #d32f2f;
+        }
+
+        /* Hidden sections */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+                font-size: 0.85rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Més Arquitectura</div>
+        <ul>
+            <li><a onclick="showPage('home')">Inicio</a></li>
+            <li><a onclick="showPage('portfolio')">Portfolio</a></li>
+            <li><a onclick="showPage('contact')">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Més Arquitectura</h1>
+            <p>Dirección de Santiago Montes, Arquitecto</p>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem;">Reformas • Obra Nueva • Certificaciones • Rehabilitaciones</p>
+            <button class="cta-button" onclick="showPage('contact')">Solicitar Consulta</button>
+        </section>
+
+        <!-- About Section -->
+        <section class="services">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <div style="max-width: 900px; margin: 0 auto; text-align: justify; line-height: 1.8; color: #1a1a1a;">
+                <p style="margin-bottom: 1rem;">
+                    <strong>Santiago Montes</strong>, arquitecto profesional con más de 25 años de experiencia, dirige Més Arquitectura desde su fundación en 2000. Nuestra empresa se especializa en proyectos residenciales, reformas integrales y gestión técnica de obras.
+                </p>
+                <p style="margin-bottom: 1rem;">
+                    Nos enfocamos en viviendas unifamiliares (chalets aislados o entre medianeras), reformas y rehabilitaciones de edificios existentes, certificaciones administrativas (cédulas de habitabilidad, certificados energéticos) y dirección técnica de obra.
+                </p>
+                <p>
+                    Combinamos un enfoque artesanal y detallista (croquis a mano, análisis previo) con herramientas profesionales (AutoCAD) para garantizar precisión, funcionalidad y creatividad en cada proyecto. Mantenemos una comunicación constante con nuestros clientes.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services">
+            <h2 class="section-title">Servicios del Arquitecto</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">�</div>
+                    <h3>Obra Nueva</h3>
+                    <p>Proyectos de vivienda unifamiliar desde el diseño inicial hasta la finalización de la obra.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">�</div>
+                    <h3>Reformas Integrales</h3>
+                    <p>Transformación completa de espacios existentes manteniendo integridad estructural.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📋</div>
+                    <h3>Aparejería Técnica</h3>
+                    <p>Supervisión técnica de obra, control de calidad y gestión de permisos administrativos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📜</div>
+                    <h3>Certificados Administrativos</h3>
+                    <p>Cédula de habitabilidad, certificados energéticos y trámites con administraciones públicas.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✏️</div>
+                    <h3>Dirección de Obra</h3>
+                    <p>Seguimiento integral del proyecto desde diseño hasta finalización.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Portfolio Page -->
+    <div id="portfolio" class="page">
+        <section class="portfolio">
+            <h2 class="section-title">Áreas de Experiencia</h2>
+            <div class="portfolio-grid">
+                <div class="portfolio-item" onclick="openPortfolioDetail('unifamiliar')" style="cursor: pointer;">
+                    <h3>Vivienda Unifamiliar</h3>
+                    <p>Chalets aislados y entre medianeras con diseño personalizado</p>
+                </div>
+                <div class="portfolio-item" onclick="openPortfolioDetail('reformas')">
+                    <h3>Reformas Integrales</h3>
+                    <p>Transformación completa de espacios existentes</p>
+                </div>
+                <div class="portfolio-item" onclick="openPortfolioDetail('plurifamiliar')">
+                    <h3>Edificios Plurifamiliares</h3>
+                    <p>Proyectos residenciales colectivos y equipamientos</p>
+                </div>
+                <div class="portfolio-item" onclick="openPortfolioDetail('supervision')">
+                    <h3>Supervisión Técnica</h3>
+                    <p>Dirección de obra y control de calidad</p>
+                </div>
+                <div class="portfolio-item" onclick="openPortfolioDetail('administrativa')">
+                    <h3>Gestión Administrativa</h3>
+                    <p>Permisos, cédulas y certificados energéticos</p>
+                </div>
+                <div class="portfolio-item" onclick="openPortfolioDetail('asesoramiento')">
+                    <h3>Asesoramiento Técnico</h3>
+                    <p>Consultoría especializada en arquitectura y obra</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Portfolio Detail Modals -->
+    <div id="portfolioModal" class="modal" onclick="closePortfolioDetail(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closePortfolioDetail()">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="contact">
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contacta con Nosotros</h3>
+                    <p>📍 Barcelona, España</p>
+                    <p>📧 s_montes@coac.net</p>
+                    <p>📱 675 785 892</p>
+                    <p>💬 WhatsApp disponible</p>
+                    <p>🕐 Disponible de 15:00 a 21:00</p>
+                    <p style="margin-top: 2rem; font-size: 0.95rem; opacity: 0.9;">
+                        <strong>Proceso inicial:</strong> Solicitamos información del proyecto y realizamos una reunión inicial en nuestro despacho para entender necesidades y explicar condicionantes técnicos.
+                    </p>
+                </div>
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label>Nombre</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Proyecto</label>
+                        <select style="width: 100%; padding: 10px; border: none; border-radius: 5px; font-family: inherit; font-size: 1rem;">
+                            <option>Selecciona un tipo</option>
+                            <option>Vivienda unifamiliar</option>
+                            <option>Reforma integral</option>
+                            <option>Certificado administrativo</option>
+                            <option>Otro - indicar en mensaje</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Mensaje</label>
+                        <textarea required placeholder="Cuéntanos sobre tu proyecto..."></textarea>
+                    </div>
+                    <button type="submit" class="cta-button">Enviar Consulta</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Més Arquitectura. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const portfolioData = {
+            unifamiliar: {
+                title: 'Vivienda Unifamiliar',
+                description: 'Proyectos de viviendas unifamiliares personalizadas, desde chalets aislados hasta casas entre medianeras. Cada proyecto es diseñado según las necesidades específicas del cliente, combinando funcionalidad, estética y eficiencia energética.',
+                details: [
+                    'Diseño integral de viviendas unifamiliares',
+                    'Chalets aislados con terreno amplio',
+                    'Casas entre medianeras',
+                    'Reformas de viviendas unifamiliares',
+                    'Proyecto y dirección de obra'
+                ],
+                images: [
+                    'Foto proyecto 1 - Chalets aislado',
+                    'Foto proyecto 2 - Casa entre medianeras',
+                    'Foto proyecto 3 - Detalle construcción',
+                    'Foto proyecto 4 - Acabados finales'
+                ]
+            },
+            reformas: {
+                title: 'Reformas Integrales',
+                description: 'Transformación completa de espacios existentes manteniendo la integridad estructural del edificio. Nos especializamos en modernizar viviendas antiguas combinando respeto por la estructura original con diseño contemporáneo.',
+                details: [
+                    'Reformas de cocinas y baños',
+                    'Reorganización de espacios',
+                    'Mejora de eficiencia energética',
+                    'Actualización de instalaciones',
+                    'Acabados de calidad'
+                ],
+                images: [
+                    'Foto reforma 1 - Antes y después',
+                    'Foto reforma 2 - Obra en progreso',
+                    'Foto reforma 3 - Detalle acabados',
+                    'Foto reforma 4 - Vivienda reformada'
+                ]
+            },
+            plurifamiliar: {
+                title: 'Edificios Plurifamiliares',
+                description: 'Proyectos de edificios residenciales colectivos con múltiples unidades. Experiencia en diseño de edificios que optimizan espacios comunes y privados.',
+                details: [
+                    'Diseño de edificios de viviendas',
+                    'Optimización de espacios comunes',
+                    'Áreas de circulación eficientes',
+                    'Estacionamientos y servicios',
+                    'Proyectos sostenibles'
+                ],
+                images: [
+                    'Foto edificio 1 - Fachada principal',
+                    'Foto edificio 2 - Entrada común',
+                    'Foto edificio 3 - Proyecto arquitectónico',
+                    'Foto edificio 4 - Detalle constructivo'
+                ]
+            },
+            supervision: {
+                title: 'Supervisión Técnica',
+                description: 'Dirección técnica integral de obras desde el inicio hasta la finalización. Control de calidad, cumplimiento de normativas y coordinación de todos los trabajos.',
+                details: [
+                    'Coordinación de obra',
+                    'Control de calidad',
+                    'Supervisión de subcontratas',
+                    'Cumplimiento de normativas',
+                    'Resolución de imprevistos'
+                ],
+                images: [
+                    'Foto supervisión 1 - Obra en fase inicial',
+                    'Foto supervisión 2 - Obra en progreso',
+                    'Foto supervisión 3 - Inspección de calidad',
+                    'Foto supervisión 4 - Finalización'
+                ]
+            },
+            administrativa: {
+                title: 'Gestión Administrativa',
+                description: 'Trámites completos ante organismos públicos y administraciones. Gestión de cédulas de habitabilidad, certificados energéticos y permisos municipales.',
+                details: [
+                    'Cédulas de habitabilidad',
+                    'Certificados energéticos',
+                    'Permisos municipales',
+                    'Trámites administrativos',
+                    'Coordinación con administraciones'
+                ],
+                images: [
+                    'Documento 1 - Cédula de habitabilidad',
+                    'Documento 2 - Certificado energético',
+                    'Documento 3 - Proyecto técnico',
+                    'Documento 4 - Trámites finalizados'
+                ]
+            },
+            asesoramiento: {
+                title: 'Asesoramiento Técnico',
+                description: 'Consultoría especializada en decisiones arquitectónicas y constructivas. Asesoramiento en mejoras, ampliaciones y aspectos técnicos del proyecto.',
+                details: [
+                    'Asesoramiento en diseño',
+                    'Estudio de viabilidad',
+                    'Análisis de costos',
+                    'Recomendaciones técnicas',
+                    'Consultoría especializada'
+                ],
+                images: [
+                    'Foto asesoramiento 1 - Reunión con cliente',
+                    'Foto asesoramiento 2 - Análisis de proyecto',
+                    'Foto asesoramiento 3 - Croquis inicial',
+                    'Foto asesoramiento 4 - Propuesta final'
+                ]
+            }
+        };
+
+        function openPortfolioDetail(category) {
+            const data = portfolioData[category];
+            const modalContent = document.getElementById('modalContent');
+            
+            let html = `
+                <div class="modal-header">
+                    <h2>${data.title}</h2>
+                    <p>${data.description}</p>
+                </div>
+                <div class="modal-body">
+                    <h3 style="color: #2c3e50; margin-bottom: 1rem;">Características principales:</h3>
+                    <ul style="margin-bottom: 2rem; line-height: 1.8;">
+            `;
+            
+            data.details.forEach(detail => {
+                html += `<li style="margin-bottom: 0.5rem; color: #555;">✓ ${detail}</li>`;
+            });
+            
+            html += `</ul>
+                    <h3 style="color: #2c3e50; margin-bottom: 1rem;">Galería de Proyectos:</h3>
+                    <div class="modal-gallery">
+            `;
+            
+            data.images.forEach(image => {
+                html += `
+                    <div class="gallery-item">
+                        <div>
+                            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
+                            ${image}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            html += `</div></div>`;
+            
+            modalContent.innerHTML = html;
+            document.getElementById('portfolioModal').classList.add('active');
+        }
+
+        function closePortfolioDetail(event) {
+            if (event && event.target.id !== 'portfolioModal') return;
+            document.getElementById('portfolioModal').classList.remove('active');
+        }
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            alert('Mensaje enviado con éxito. Nos pondremos en contacto pronto.');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>
